@@ -2,6 +2,8 @@
     "name": "mehmetbeyhz/facebook-api",
     "description": "Facebook rest api",
     "php": ">=5.3.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "license": "MIT",
     "authors": [
         {
