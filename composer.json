@@ -1,0 +1,15 @@
+{
+    "name": "mehmetbeyhz/facebook-api",
+    "description": "Facebook rest api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mehmetbeyHZ",
+            "email": "mehmetbeyhz@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "facebookAPI\\": "src"
+    }
+}
