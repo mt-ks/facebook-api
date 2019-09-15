@@ -10,6 +10,6 @@
     ],
     "require": {},
     "autoload": {
-        "facebookAPI\\": "src/"
+        "facebookAPI\\": "src"
     }
 }
