@@ -12,6 +12,8 @@ class Facebook
     protected $apiSecret      = "62f8ce9f74b12f84c123cc23437a4a32";
     protected $signed_data    = false;
 
+    protected $app_id         = false;
+    protected $client_token   = false;
     /**
      * @param @string $username            facebook kullanıcı adınız, e-posta adresiniz veya telefon numaranız olabilir.
      *                                     herhangi bir tanesini yazıp giriş yapmaya çalışmanız yeterli olacaktır.
@@ -47,6 +49,37 @@ class Facebook
         return $this->request('',$data);
     }
 
+    public function setAppInfo($appID,$client_token)
+    {
+        $this->app_id       = $appID;
+        $this->client_token = $client_token;
+    }
+
+    public function createAppLoginCode($scopes = ['public_profile']){
+        $scopes = implode(',',$scopes);
+        $this->serverURL = 'graph';
+        return $this->request('device/login',[
+            'access_token'   =>  $this->app_id.'|'.$this->client_token,
+            'scope'          => $scopes,
+        ]);
+    }
+
+
+    /**
+     * @param $code
+     * @return bool|string
+     * API Interval : 5 Seconds     5 Saniyede bir access_token kontrol ettirilmelidir.
+     */
+    public function controlAppLoginCode($code)
+    {
+        $this->serverURL = 'graph';
+        return $this->request('device/login_status',[
+            'access_token'   =>  $this->app_id.'|'.$this->client_token,
+            'code'           => $code
+        ]);
+    }
+
+
     /**
      * @param $id                    beğeni işlemi yapılacak olan id'dir yanlızca id değil versiyon 4.0'da userid_postid
      *                               şeklinde belirlenmesi gerekiyor. örneğin 1235_2135135463464545
@@ -73,7 +106,7 @@ class Facebook
         return $this->request('me?fields=id,name,picture&access_token='.$token);
     }
 
-
+    
     protected function reactionTypes()
     {
         return ['LIKE','LOVE','HAHA','WOW','SAD','ANGRY'];
